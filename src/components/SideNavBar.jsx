@@ -16,24 +16,12 @@ import {
   LogOut,
 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+import { navigationItemsLink } from "../utils/nav";
 
-const Layout = ({ children, user }) => {
+const SideNavBar = ({ children, user }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { logout } = useAuth();
   const location = useLocation();
-
-  const navigationItems = [
-    { path: "/dashboard", label: "Dashboard", icon: Home },
-    { path: "/registration", label: "Registration", icon: UserPlus },
-    { path: "/reports", label: "Report Harassment", icon: AlertTriangle },
-    { path: "/education", label: "Education", icon: BookOpen },
-    { path: "/crowdfunding", label: "Crowdfunding", icon: Heart },
-    { path: "/scholarships", label: "Scholarships", icon: GraduationCap },
-    { path: "/coupons", label: "Coupons", icon: Tag },
-    { path: "/awareness", label: "Awareness", icon: Megaphone },
-    { path: "/mentorship", label: "Mentorship", icon: Users },
-    { path: "/create-blog", label: "Create Blog", icon: PenTool },
-  ];
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
@@ -80,7 +68,7 @@ const Layout = ({ children, user }) => {
             )}
 
             <nav className="space-y-2">
-              {navigationItems.map((item) => {
+              {navigationItemsLink.map((item) => {
                 const Icon = item.icon;
                 const isActive = location.pathname === item.path;
 
@@ -132,4 +120,4 @@ const Layout = ({ children, user }) => {
   );
 };
 
-export default Layout;
+export default SideNavBar;

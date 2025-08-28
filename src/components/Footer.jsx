@@ -203,7 +203,7 @@ const Footer = () => {
           {/* Copyright */}
           <div className="border-t border-gray-200 pt-8 text-center">
             <p className="text-gray-600">
-              © 2024 Thrive Platform. All rights reserved. Empowering women,
+              © 2025 Thrive Platform. All rights reserved. Empowering women,
               protecting identities.
             </p>
           </div>

@@ -2,12 +2,13 @@ import React from "react";
 
 import { useState } from "react";
 import { Menu, X, Heart } from "lucide-react";
+import { Link } from "react-router";
 
 const PublicNavbar = ({ currentPage, setCurrentPage }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { id: "home", label: "Home" },
+    { id: "", label: "Home" },
     { id: "login", label: "Login" },
     { id: "signup", label: "Sign Up" },
     { id: "contact", label: "Contact" },
@@ -31,9 +32,9 @@ const PublicNavbar = ({ currentPage, setCurrentPage }) => {
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
               {navItems.map((item) => (
-                <button
+                <Link
                   key={item.id}
-                  onClick={() => setCurrentPage(item.id)}
+                  to={`/${item.id}`}
                   className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                     currentPage === item.id
                       ? "bg-pink-100 text-pink-700"
@@ -41,7 +42,7 @@ const PublicNavbar = ({ currentPage, setCurrentPage }) => {
                   }`}
                 >
                   {item.label}
-                </button>
+                </Link>
               ))}
             </div>
           </div>

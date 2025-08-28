@@ -22,84 +22,37 @@ import Coupons from "./pages/Coupons";
 import Awareness from "./pages/Awareness";
 import Mentorship from "./pages/Mentorship";
 import "./globals.css";
-
-function AppContent() {
-  const [currentPage, setCurrentPage] = useState("home");
-  const { isAuthenticated, user } = useAuth();
-
-  const renderPublicPage = () => {
-    switch (currentPage) {
-      case "home":
-        return <PublicHome setCurrentPage={setCurrentPage} />;
-      case "login":
-        return <Login setCurrentPage={setCurrentPage} />;
-      case "signup":
-        return <Signup setCurrentPage={setCurrentPage} />;
-      case "blog":
-        return <Blog setCurrentPage={setCurrentPage} />;
-      case "create-blog":
-        return <CreateBlog setCurrentPage={setCurrentPage} />;
-      case "contact":
-        return <Contact setCurrentPage={setCurrentPage} />;
-      case "donate":
-        return <Donate setCurrentPage={setCurrentPage} />;
-      default:
-        return <PublicHome setCurrentPage={setCurrentPage} />;
-    }
-  };
-
-  const renderDashboardPage = () => {
-    switch (currentPage) {
-      case "dashboard":
-        return <Home setCurrentPage={setCurrentPage} />;
-      case "registration":
-        return <UserRegistration />;
-      case "reports":
-        return <HarassmentReports />;
-      case "education":
-        return <Education />;
-      case "crowdfunding":
-        return <Crowdfunding />;
-      case "scholarships":
-        return <Scholarships />;
-      case "coupons":
-        return <Coupons />;
-      case "awareness":
-        return <Awareness />;
-      case "mentorship":
-        return <Mentorship />;
-      case "create-blog":
-        return <CreateBlog setCurrentPage={setCurrentPage} />;
-      default:
-        return <Home setCurrentPage={setCurrentPage} />;
-    }
-  };
-
-  if (isAuthenticated) {
-    return (
-      <Layout
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        user={user}
-      >
-        {renderDashboardPage()}
-      </Layout>
-    );
-  }
-
-  return (
-    <div className="min-h-screen bg-white">
-      <PublicNavbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
-      {renderPublicPage()}
-      <Footer />
-    </div>
-  );
-}
+import { Route, Routes } from "react-router";
+import SideNavBar from "./components/SideNavBar";
+import { navigationItemsLink } from "./utils/nav";
 
 function App() {
   return (
     <AuthProvider>
-      <AppContent />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/donate" element={<Donate />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+
+        {/* Protected routes with sidebar layout */}
+
+        {navigationItemsLink.map((item) => {
+          const Component = item.component; // get component reference
+          return (
+            <Route
+              key={item.path}
+              path={item.path}
+              element={
+                <SideNavBar>
+                  <Component />
+                </SideNavBar>
+              }
+            />
+          );
+        })}
+      </Routes>
     </AuthProvider>
   );
 }
